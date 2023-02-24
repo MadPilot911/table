@@ -8,6 +8,7 @@ import { faker } from "@faker-js/faker";
 
 const LOADING = 1;
 const LOADED = 2;
+const ROWSNUMBER = 1000000;
 let itemStatusMap = {};
 
 const isItemLoaded = (index) => !!itemStatusMap[index];
@@ -58,7 +59,7 @@ const Table = () => (
       {({ height, width }) => (
         <InfiniteLoader
           isItemLoaded={isItemLoaded}
-          itemCount={1000}
+          itemCount={ROWSNUMBER}
           loadMoreItems={loadMoreItems}
         >
           {({ onItemsRendered, ref }) => (
