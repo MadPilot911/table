@@ -1,6 +1,4 @@
-// @ts-nocheck
-
-import React, { createRef, Fragment, PureComponent } from "react";
+import { Fragment, PureComponent } from "react";
 import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
@@ -8,11 +6,26 @@ import { faker } from "@faker-js/faker";
 
 const LOADING = 1;
 const LOADED = 2;
-const ROWSNUMBER = 1000000;
-let itemStatusMap = {};
+const ROWS_NUMBER = 1000000;
+const ITEM_SIZE = 30;
+const LOAD_DELAY = 1200;
 
-const isItemLoaded = (index) => !!itemStatusMap[index];
-const loadMoreItems = (startIndex, stopIndex) => {
+let itemStatusMap: { [index: string]: number } = {};
+
+interface DataType {
+  name: string;
+  email: string;
+  address: string;
+  jobArea: string;
+  phone: string;
+}
+
+const isItemLoaded = (index: number): boolean => !!itemStatusMap[index];
+
+const loadMoreItems = (
+  startIndex: number,
+  stopIndex: number
+): Promise<void> => {
   for (let index = startIndex; index <= stopIndex; index++) {
     itemStatusMap[index] = LOADING;
   }
@@ -22,15 +35,20 @@ const loadMoreItems = (startIndex, stopIndex) => {
         itemStatusMap[index] = LOADED;
       }
       resolve();
-    }, 0)
+    }, LOAD_DELAY)
   );
 };
 
-class Row extends PureComponent {
+class Row extends PureComponent<{
+  index: number;
+  style: object;
+  data: object;
+}> {
   render() {
     const { index, style } = this.props;
-    let label;
-    if (itemStatusMap[index] === LOADED) {
+    let label: DataType | Partial<DataType>;
+    const isLoaded = itemStatusMap[index] === LOADED;
+    if (isLoaded) {
       label = {
         name: faker.name.firstName(),
         email: faker.internet.email(),
@@ -39,15 +57,19 @@ class Row extends PureComponent {
         phone: faker.phone.number(),
       };
     } else {
-      label = "Loading...";
+      label = { name: "Loading..." };
     }
-    return (
+    return isLoaded ? (
       <div className="row" style={style}>
         <span className="cell">{label.name}</span>
         <span className="cell">{label.email}</span>
         <span className="cell">{label.address}</span>
         <span className="cell">{label.jobArea}</span>
         <span className="cell">{label.phone}</span>
+      </div>
+    ) : (
+      <div className="row" style={style}>
+        <span className="cell">{label.name}</span>
       </div>
     );
   }
@@ -59,15 +81,15 @@ const Table = () => (
       {({ height, width }) => (
         <InfiniteLoader
           isItemLoaded={isItemLoaded}
-          itemCount={ROWSNUMBER}
+          itemCount={ROWS_NUMBER}
           loadMoreItems={loadMoreItems}
         >
           {({ onItemsRendered, ref }) => (
             <List
               className="List"
               height={height}
-              itemCount={ROWSNUMBER}
-              itemSize={30}
+              itemCount={ROWS_NUMBER}
+              itemSize={ITEM_SIZE}
               onItemsRendered={onItemsRendered}
               ref={ref}
               width={width}
