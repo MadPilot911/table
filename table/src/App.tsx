@@ -40,49 +40,49 @@ const loadMoreItems = (
   );
 };
 
-class Row extends PureComponent<{
+interface RowProps {
   index: number;
   style: object;
   data: object;
-}> {
-  render() {
-    const { index, style } = this.props;
-    let label: DataType | Partial<DataType>;
-    const isLoaded = itemStatusMap[index] === LOADED;
-    if (isLoaded) {
-      label = {
-        name: faker.name.firstName(),
-        email: faker.internet.email(),
-        address: faker.address.streetAddress(),
-        jobArea: faker.name.jobArea(),
-        phone: faker.phone.number(),
-      };
-    } else {
-      label = { name: "Loading" };
-    }
-    return isLoaded ? (
-      <div className="row" style={style}>
-        <span className="cell">{label.name}</span>
-        <span className="cell">{label.email}</span>
-        <span className="cell">{label.address}</span>
-        <span className="cell">{label.jobArea}</span>
-        <span className="cell">{label.phone}</span>
-      </div>
-    ) : (
-      <div className="row" style={style}>
-        <ThreeDots
-          height="30"
-          width="30"
-          radius="4"
-          color="gray"
-          ariaLabel="three-dots-loading"
-          wrapperClass="loader"
-          visible={true}
-        />
-      </div>
-    );
-  }
 }
+
+const Row = (props: RowProps) => {
+  const { index, style } = props;
+  let label: DataType | Partial<DataType>;
+  const isLoaded = itemStatusMap[index] === LOADED;
+  if (isLoaded) {
+    label = {
+      name: faker.name.firstName(),
+      email: faker.internet.email(),
+      address: faker.address.streetAddress(),
+      jobArea: faker.name.jobArea(),
+      phone: faker.phone.number(),
+    };
+  } else {
+    label = { name: "Loading" };
+  }
+  return isLoaded ? (
+    <tr className="row" style={style}>
+      <td className="cell">{label.name}</td>
+      <td className="cell">{label.email}</td>
+      <td className="cell">{label.address}</td>
+      <td className="cell">{label.jobArea}</td>
+      <td className="cell">{label.phone}</td>
+    </tr>
+  ) : (
+    <tr className="row" style={style}>
+      <ThreeDots
+        height="40"
+        width="40"
+        radius="4"
+        color="gray"
+        ariaLabel="three-dots-loading"
+        wrapperClass="loader"
+        visible={true}
+      />
+    </tr>
+  );
+};
 
 const Table = () => (
   <div className="table">
@@ -102,6 +102,7 @@ const Table = () => (
               onItemsRendered={onItemsRendered}
               ref={ref}
               width={width}
+              innerElementType="table"
             >
               {Row}
             </List>
