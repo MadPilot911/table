@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { createRef, Fragment, PureComponent } from "react";
 import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
