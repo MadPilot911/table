@@ -3,6 +3,7 @@ import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { faker } from "@faker-js/faker";
+import { ThreeDots } from "react-loader-spinner";
 
 const LOADING = 1;
 const LOADED = 2;
@@ -57,7 +58,7 @@ class Row extends PureComponent<{
         phone: faker.phone.number(),
       };
     } else {
-      label = { name: "Loading..." };
+      label = { name: "Loading" };
     }
     return isLoaded ? (
       <div className="row" style={style}>
@@ -69,7 +70,15 @@ class Row extends PureComponent<{
       </div>
     ) : (
       <div className="row" style={style}>
-        <span className="cell">{label.name}</span>
+        <ThreeDots
+          height="30"
+          width="30"
+          radius="4"
+          color="gray"
+          ariaLabel="three-dots-loading"
+          wrapperClass="loader"
+          visible={true}
+        />
       </div>
     );
   }
