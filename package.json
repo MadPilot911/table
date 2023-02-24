@@ -1,7 +1,5 @@
 {
-  "dependencies": {
-    "antd": "^5.2.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@faker-js/faker": "^7.6.0"
   }

@@ -7,6 +7,7 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -14,12 +15,13 @@
     "@types/node": "^16.18.12",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "antd": "^5.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "react-virtualized-auto-sizer": "^1.0.7",
+    "react-window": "^1.8.8",
+    "react-window-infinite-loader": "^1.0.8",
     "typescript": "^4.9.5",
-    "virtuallist-antd": "^0.7.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -45,5 +47,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-virtualized-auto-sizer": "^1.0.1",
+    "@types/react-window": "^1.8.5",
+    "@types/react-window-infinite-loader": "^1.0.6"
   }
 }
