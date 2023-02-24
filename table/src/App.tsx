@@ -66,7 +66,7 @@ const Table = () => (
             <List
               className="List"
               height={height}
-              itemCount={1000}
+              itemCount={ROWSNUMBER}
               itemSize={30}
               onItemsRendered={onItemsRendered}
               ref={ref}
